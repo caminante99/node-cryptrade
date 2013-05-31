@@ -1,3 +1,7 @@
+credentials.coffee
+
+node_modules
+
 lib-cov
 *.seed
 *.log

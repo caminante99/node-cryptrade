@@ -1,4 +1,3 @@
-node-cryptrade
-==============
+bitcoin trading machine
 
-Demo project based on node-substrate
+demo project, work in progress, WELL AS USUAL 

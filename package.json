@@ -1,0 +1,28 @@
+{
+  "name": "cryptrade",
+  "version": "0.0.0",
+  "description": "bitcoin trading machine",
+  "main": "cryptrade.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/daizoru/node-cryptrade.git"
+  },
+  "keywords": [
+    "bitcoin",
+    "trading"
+  ],
+  "author": "Julian Bilcke <julian.bilcke@daizoru.com>",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "359a5903eac4745648fe97fcfa5cfc06cf2c64cd",
+  "dependencies": {
+    "petri": "0.0.0",
+    "geekdaq": "0.0.0",
+    "market": "0.0.0",
+    "colors": "~0.6.0-1",
+    "evolve": "0.0.4"
+  }
+}
