@@ -9,18 +9,20 @@ module.exports = (options={}) ->
   path                 = require 'path'
   colors               = require 'colors'
   geekdaq              = require 'geekdaq'
-  {repeat,wait}        = require 'ragtime'
   {mutable, clone}     = require 'evolve'
-  substrate            = require 'substrate'
+  petri                = require 'petri'
  
-  {P, copy, pretty, round2, round3, randInt}    = substrate.common
+  {P, copy, pretty, round2, round3, randInt}    = petri.common
   byluck = P
+
+  repeat = (t,f) -> setInterval f, t
+  wait  = (t) -> (f) -> setInterval f, t
 
   warn = alert # I should open an issue for this - 'alert' really sucks
 
   # Errors have a cost
   penalty = 10000
-  ERR = substrate.errors (value, msg) -> penalty -= value ; msg
+  ERR = petri.errors (value, msg) -> penalty -= value ; msg
 
   #demoDir = path.normalize "#{__dirname}/../examples/trading/"
   #console.log "modules: #{demoDir}"
