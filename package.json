@@ -23,6 +23,7 @@
     "geekdaq": "0.0.0",
     "market": "0.0.0",
     "colors": "~0.6.0-1",
-    "evolve": "0.0.4"
+    "evolve": "0.0.4",
+    "mtwitter": "~1.0.3"
   }
 }
