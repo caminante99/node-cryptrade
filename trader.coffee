@@ -31,18 +31,6 @@ module.exports = (options={}) ->
   ################
   # DATA SOURCES #
   ################
-  keywords = [
-    'bitcoins'
-    'bitcoin'
-    '#bitcoin'
-    'btc'
-    '$btc'
-    '#btc'
-    'cryptocurrency'
-    'cryptocurrencies'
-    'mtgox'
-    'bitstamp'
-  ]
   news =
     headlines: ->
       for i in [1..5]
