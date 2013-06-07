@@ -19,6 +19,7 @@
   "readmeFilename": "README.md",
   "gitHead": "359a5903eac4745648fe97fcfa5cfc06cf2c64cd",
   "dependencies": {
+    "coffee-script": "1.6.x",
     "petri": "0.0.0",
     "geekdaq": "0.0.0",
     "market": "0.0.0",

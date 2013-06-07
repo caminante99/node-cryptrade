@@ -3,21 +3,22 @@
 {inspect}        = require 'util'
 
 # THIRD PARTIES
-timmy            = require 'timmy'
-{System, common} = require 'petri'
+{Petri, common} = require 'petri'
 Twitter          = require 'mtwitter'
 eyes             = require 'eyes'
-trader           = require './trader'
+ROOT             = require('./trader').toString()
 credentials      = require './credentials'
 
 twit             = new Twitter credentials
 
-{pretty} = common
+{pretty, repeat, every, pick, sha1} = common
 log = console.log 
 
 POOL_SIZE = 6
 
 config =
+
+  traders: 2
 
   keywords: [
     'bitcoins'
@@ -42,40 +43,54 @@ config =
 
   balance: 100000000
 
-# money allocator
-allocMoney = ->
 
+Petri ->
 
-  config.balance 
+  log "Cryptrade: initializing"
 
-system = System
+  # storage for trading models
+  pool = {}
+  pool[ROOT.toString()] = 1
 
-  bootstrap: [ trader ]
+  # Initialization of the trading pool
+  @spawn() for i in [0...config.traders]
 
-  workersByMachine: 1 # common.NB_CORES
-  decimationTrigger: 10
+  balance = 100000
 
-  # callback called when a new agent is created
-  config: (agent) ->
-    log "Cryptrade.master.config: #{agent.id}"
-    agent.performance ?= 0
+  @on 'exit', =>
+    log "Trader exited"
+    @spawn()
 
-    ##########################
+  @on 'ready', (onComplete) ->
+    log "Trader ready, configuring.."
+    onComplete
+      src: pick pool
+      balance: balance * 0.1
+      portfolio: {}
+      history: []
+      geekdaq: config.geekdaq
 
-    balance: allocMoney()
-    
-    portfolio: {}
-    history: []
+  @on 'data', (reply, src, msg) ->
+    id = sha1 src
+    name = id[-4..] + id[..4]
+    switch msg.cmd
+      when 'log'
+        console.log "Trader (#{name}): #{msg.msg}"
+      when 'results'
+        pool[src] = msg.balance
+      else
+        console.log "Trader (#{name}): unknow cmd #{pretty msg}"
+    #agent.source = source
+    # store the agent
+    # if fork: do something
 
-    interval: 1.sec
-    iterations: 10
+  every 3.sec =>
 
-    geekdaq: config.geekdaq
+    log "Cryptrade: broadcasting news"
 
-  # called AFTER the agent has been removed from database,
-  # and BEFORE a new agent is automatically spawned
-  onExit: ({agent, code, signal}) ->
-    log "Cryptrade.master.onExit: #{agent.id}"
+    news = twitter: {}
 
-  onFork: ({agent, fork}) ->
-    log "Cryptrade.master.onFork: #{agent.id}"
+    for keyword in config.keywords
+      news.twitter[keyword] = Math.round Math.random 10
+
+    @broadcast news
