@@ -46,7 +46,15 @@ config =
 
 Petri ->
 
-  log "Cryptrade: initializing"
+  log """                                        
+\t,---.               |                  |     
+\t|    ,---.,   .,---.|--- ,---.,---.,---|,---.
+\t|    |    |   ||   ||    |    ,---||   ||---'
+\t`---'`    `---||---'`---'`    `---^`---'`---'
+\t          `---'|                       
+\t                      Cryptocurrency Trading   
+
+  """
 
   # storage for trading models
   pool = {}
